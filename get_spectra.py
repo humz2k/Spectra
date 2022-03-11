@@ -12,6 +12,8 @@ from astropy.utils.data import get_pkg_data_filename
 
 pos = coords.SkyCoord('0h8m05.63s +14d50m23.3s', frame='icrs')
 
+print(pos)
+
 xid = SDSS.query_region(pos, spectro=True)
 
 sp = SDSS.get_spectra(matches=xid)
