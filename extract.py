@@ -112,8 +112,7 @@ def extract_sources(file,bw=defaults['bw'],bh=defaults['bh'],
 def sources_to_world(file,sources=None):
     if not isinstance(sources, np.ndarray):
         sources = extract_sources(file)
-    f = get_pkg_data_filename(file)
-    hdu = fits.open(f)[0]
+    hdu = fits.open(file)[0]
     w = WCS(hdu.header)
     out = [w.pixel_to_world(sources['x'][i],sources['y'][i]) for i in range(len(sources))]
     return out
@@ -137,10 +136,10 @@ file = "m51_g-band_128.0s_bin1_220202_114527_al_seo_124_WCS.fits"
 #df.load(file)
 #image = df.imageget() * 1.0
 
-image = download_file('http://data.astropy.org/tutorials/FITS-images/HorseHead.fits', cache=True )
+#image = download_file('http://data.astropy.org/tutorials/FITS-images/HorseHead.fits', cache=True )
 #print(image)
 
-#mage = file
+image = file
 
 df = DataFits()
 df.load(image)
@@ -166,13 +165,9 @@ for i in range(len(objects[0:40])):
     e.set_edgecolor('red')
     ax.add_artist(e)
 world_coords = sources_to_world(file,objects)
-#print("LEN",len(world_coords))
-yee = world_coords[50]
+print(world_coords[10])
+spectra = get_spectra(world_coords[10])
 
-#pos = coords.SkyCoord('0h8m05.63s +14d50m23.3s', frame='icrs')
-pos = coords.SkyCoord('18h04m20.99s +29d31m08.9s', frame='icrs')
-
-#pos = coords.SkyCoord(yee.ra + " " + yee.dec, frame='icrs')
-spectra = get_spectra(yee)
+print(spectra)
 
 plt.show()
